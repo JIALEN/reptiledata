@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <groupId>com.alen</groupId>
+    <artifactId>reptile-data</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>account</module>
+        <module>hystrix-service</module>
+        <module>config-server</module>
+        <module>eureka-server</module>
+        <module>eureka-client</module>
+        <module>user</module>
+        <module>feign-service</module>
+        <module>config-client</module>
+    </modules>
+    <name>reptile-data</name>
+
+    <parent>
+        <!--一个特殊的starter，它用来提供相关的Maven默认依赖，使用它之后，常用的包依赖可以省去version标签-->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.4.RELEASE</version>
+    </parent>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <!--注意与 Spring Boot 版本的兼容性-->
+        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+    </properties>
+
+    <dependencies>
+       <!-- spring-cloud-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+        </dependency>
+        <!--测试-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--自动生成类一些方法-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- spring-boot-starter-actuator这个库让我们可以访问应用的很多信息，
+              包括：/env、/info、/metrics、/health等。
+                 现在运行程序，然后在浏览器中访问：http://localhost:8080/health，-->
+       <!-- springboot2.0 后内存数据库与actuator不能同时使用 2.0.4可以-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+
+    </dependencies>
+
+    <!-- Maven 使用dependencyManagement 元素来提供了一种管理依赖版本号的方式。
+通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
+使用pom.xml 中的dependencyManagement 元素能让
+所有在子项目中引用一个依赖而不用显式的列出版本号。Maven 会沿着父子层次向上走，
+直到找到一个拥有dependencyManagement 元素的项目，
+然后它就会使用在这个dependencyManagement 元素中指定的版本号。-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <finalName>spring-boot</finalName>
+        <plugins>
+            <!--   添加Spring Boot的编译插件-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+           <!-- 运行mvn install时跳过Test-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

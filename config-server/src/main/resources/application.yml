@@ -1,0 +1,35 @@
+server:
+  port: 8017
+
+eureka:
+  instance:
+    hostname: localhost
+    # 发呆时间，即服务失效时间（缺省为90s）,就是超过15秒没有续约就会从注册表中剔除
+    lease-expiration-duration-in-seconds: 15
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+  client:
+   #设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址。高可用的注册中心时，
+    #可以配置多个注册中心，通过逗号隔开
+    service-url:
+     defaultZone: http://localhost:8010/eureka/
+
+spring:
+  application:
+  #这在以后的服务与服务之间相互调用一般都是根据这个name
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          #git地址
+          uri:
+          #指定搜索路径，config-server会自动搜索根目录和指定目录（逗号分隔）下的文件
+          search-paths: configure
+          #有读取权限的git用户
+          username:
+          password:
+
+
+
+

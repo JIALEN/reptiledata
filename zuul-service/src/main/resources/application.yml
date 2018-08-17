@@ -1,0 +1,30 @@
+server:
+  port: 8016
+
+eureka:
+  instance:
+    hostname: localhost
+      # 发呆时间，即服务失效时间（缺省为90s）,就是超过15秒没有续约就会从注册表中剔除
+    lease-expiration-duration-in-seconds: 15
+      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka/
+
+spring:
+  application:
+    name: zuul-service
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: eureka-client
+    api-b:
+      path: /api-b/**
+      serviceId: feign-service
+  ignored-services: '*'
+
+
+
