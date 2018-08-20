@@ -1,0 +1,11 @@
+
+spring:
+  cloud:
+    config:
+    #指明远程仓库的分支
+      label: master
+      #dev开发环境配置文件
+      #test测试环境
+      #pro正式环境
+      profile: dev
+      uri: http://localhost:8017/

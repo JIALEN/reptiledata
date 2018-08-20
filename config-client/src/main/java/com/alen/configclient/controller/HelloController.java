@@ -19,10 +19,10 @@ public class HelloController {
      * @param
      * @return
      */
-    @RequestMapping("/hello")
+    @RequestMapping("/getname")
     public String getName() {
         System.out.println(name);
         System.out.println(message);
-        return "";
+        return name;
     }
 }
